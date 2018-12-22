@@ -66,6 +66,11 @@ public class CubeDaoImplTest {
         CubeWrapper cubeWrapper = new CubeWrapperImpl(cube, "xex");
         cubeDao.remove(cubeWrapper);
     }
+    
+    @Test(expectedExceptions = RepositoryException.class)
+    public void testAddFail(){
+        cubeDao.add(cubeWrapper1);
+    }
 
     @Test
     public void testSearchByName() {
@@ -73,6 +78,30 @@ public class CubeDaoImplTest {
         List<java.lang.Object> list = cubeDao.searchByName(name);
         Assert.assertEquals(cubeWrapper1, list.toArray()[0]);
     }
+    
+    
+    @Test
+    public void testSearchByID(){
+        String id = cubeWrapper3.getId();
+        List<java.lang.Object> list = cubeDao.searchById(id);
+        Assert.assertEquals(cubeWrapper3,list.toArray()[0]);
+
+    }
+
+    @Test
+    public void testSearchBySurfaceArea(){
+        double surfaceArea = cubeWrapper3.getSurfaceArea();
+        List<java.lang.Object> list = cubeDao.searchBySurfaceArea(surfaceArea,surfaceArea);
+        Assert.assertEquals(cubeWrapper3,list.toArray()[0]);
+    }
+
+    @Test
+    public void testSearchByVolume(){
+        double volume = cubeWrapper3.getVolume();
+        List<java.lang.Object> list = cubeDao.searchByVolume(volume,volume);
+        Assert.assertEquals(cubeWrapper3,list.toArray()[0]);
+    }
+
 
 
     @Test
