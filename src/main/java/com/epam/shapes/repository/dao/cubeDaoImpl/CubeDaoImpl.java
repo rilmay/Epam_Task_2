@@ -16,6 +16,9 @@ public class CubeDaoImpl implements CubeDao {
     private Calculator calculator = CommonUtilitiesFactory.getInstance().getCalculator();
     private Warehouse warehouse;
     private Map<String, CubeWrapper> cubes;
+    private Validator validator = Validator.getValidator();
+    private Logger logger = LogManager.getLogger(CubeDaoImpl.class);
+    
 
     @Override
     public void add(CubeWrapper cubeWrapper) throws RepositoryException {
@@ -39,6 +42,12 @@ public class CubeDaoImpl implements CubeDao {
 
     @Override
     public List<Object> searchById(String id) {
+        
+        if (id == null) {
+            logger.error("Invalid arguments");
+            throw new IllegalShapeArgumentException("Invalid arguments");
+        }
+        
         List<Object> result = new LinkedList<>();
         result.add(cubes.get(id));
         return result;
@@ -46,6 +55,13 @@ public class CubeDaoImpl implements CubeDao {
 
     @Override
     public List<Object> searchByName(String name) {
+        
+        
+        if (name == null) {
+            logger.error("Invalid arguments");
+            throw new IllegalShapeArgumentException("Invalid arguments");
+        }
+        
         List<Object> result = new LinkedList<>();
         for (CubeWrapper cube : cubes.values()) {
             if (name.equals(cube.getName())) {
@@ -58,6 +74,11 @@ public class CubeDaoImpl implements CubeDao {
     @Override
     public List<Object> searchBySurfaceArea(double min, double max) {
 
+        if (!validator.isValid(min) && !validator.isValid(max)) {
+            logger.error("Invalid arguments");
+            throw new IllegalShapeArgumentException("Invalid arguments");
+        }
+        
         List<Object> result = new LinkedList<>();
         for (CubeWrapper cube : cubes.values()) {
             if (cube.getSurfaceArea() >= min && cube.getSurfaceArea() <= max) {
@@ -69,6 +90,12 @@ public class CubeDaoImpl implements CubeDao {
 
     @Override
     public List<Object> searchByVolume(double min, double max) {
+        
+        if (!validator.isValid(min) && !validator.isValid(max)) {
+            logger.error("Invalid arguments");
+            throw new IllegalShapeArgumentException("Invalid arguments");
+        }
+        
         List<Object> result = new LinkedList<>();
         for (CubeWrapper cube : cubes.values()) {
             if (cube.getVolume() >= min && cube.getVolume() <= max) {
@@ -80,6 +107,12 @@ public class CubeDaoImpl implements CubeDao {
 
     @Override
     public List<Object> searchByDistanceFromOrigin(double distance) {
+        
+        if (!validator.isValid(distance)) {
+            logger.error("Invalid arguments");
+            throw new IllegalShapeArgumentException("Invalid arguments");
+        }
+        
         List<Object> result = new LinkedList<>();
         for (CubeWrapper cube : cubes.values()) {
             Point centre = cube.getCentrePoint();
