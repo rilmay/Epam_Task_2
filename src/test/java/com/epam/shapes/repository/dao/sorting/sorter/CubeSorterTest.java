@@ -56,5 +56,34 @@ public class CubeSorterTest {
         }
         Assert.assertTrue(flag);
     }
+    
+    
+    @Test
+    public void testSortByZ() {
+        boolean flag = true;
+        double temp = -100.0;
+        for (CubeWrapper i : cubeSorter.sortBy(warehouse, CubeWrapperEnum.COORDINATE_Z)) {
+            double first = i.getCentrePoint().getZ();
+            if (first < temp) {
+                flag = false;
+            }
+            temp = first;
+        }
+        Assert.assertTrue(flag);
+    }
+
+    @Test
+    public void testSortById() {
+        boolean flag = true;
+        char temp = 0;
+        for (CubeWrapper i : cubeSorter.sortBy(warehouse, CubeWrapperEnum.ID)) {
+            char first = i.getId().charAt(0);
+            if (first < temp) {
+                flag = false;
+            }
+            temp = first;
+        }
+        Assert.assertTrue(flag);
+    }
 
 }
