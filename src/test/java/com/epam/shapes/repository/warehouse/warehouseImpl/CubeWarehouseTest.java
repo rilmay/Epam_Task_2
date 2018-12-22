@@ -56,4 +56,10 @@ public class CubeWarehouseTest {
         CubeWrapper cubeWrapper = new CubeWrapperImpl(cube, "xex");
         warehouse.removeShape(cubeWrapper);
     }
+    
+    
+    @Test(expectedExceptions = RepositoryException.class)
+    public void testAddFail() {
+        warehouse.addShape(cubeWrapper1);
+    }
 }
