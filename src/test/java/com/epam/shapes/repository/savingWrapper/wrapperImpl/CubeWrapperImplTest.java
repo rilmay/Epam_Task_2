@@ -43,4 +43,13 @@ public class CubeWrapperImplTest {
     public void testGetVolume() {
         Assert.assertEquals(calculator.getCubeVolume(cube1), cubeWrapper1.getVolume());
     }
+    
+    
+    @Test
+    public void testGetChangedfVolume(){
+        double volumeBefore = cubeWrapper2.getVolume();
+        cubeWrapper2.setHeight(2.0);
+        double volumeAfter = cubeWrapper2.getVolume();
+        Assert.assertFalse(volumeBefore==volumeAfter);
+    }
 }
